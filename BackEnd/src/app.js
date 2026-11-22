@@ -5,11 +5,7 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors({
-    origin: [
-        "http://localhost:5173",
-        "https://ai-powered-code-reviewer-eta.vercel.app",
-        "https://ai-powered-code-reviewer-hyvu0rsud.vercel.app"
-    ],
+    origin: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
