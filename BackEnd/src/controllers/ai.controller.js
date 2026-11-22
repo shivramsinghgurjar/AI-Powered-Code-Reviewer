@@ -3,28 +3,26 @@ const generateContent = require("../services/ai.service");
 
 module.exports.getReview = async (req, res) => {
     try {
+        const { code } = req.body;
 
-        const { prompt } = req.body;
-
-        if (!prompt) {
+        if (!code || typeof code !== "string" || !code.trim()) {
             return res.status(400).json({
                 success: false,
-                message: "Code or prompt is required."
+                message: "Code is required."
             });
         }
 
-        const response = await generateContent(prompt);
+        const review = await generateContent(code);
 
         return res.status(200).json({
             success: true,
-            review: response
+            review
         });
 
     } catch (error) {
+        console.error("Code Review Error:", error);
 
-        console.error("Code Review Controller Error:", error);
-
-        return res.status(503).json({
+        return res.status(500).json({
             success: false,
             message: "Unable to generate code review. Please try again later."
         });
